@@ -1,301 +1,121 @@
-<img width="640" alt="3FAD4652-488F-4F6F-A744-4C2AA5855E92" src="https://github.com/user-attachments/assets/73b701ff-2db8-4d72-9ad3-42b7e1db537f">
+# HeyCoach LinkedIn AI Lead Generator
 
-**StaffSpy** is a staff scraper library for LinkedIn.
+## Project Overview
 
-_why pay $100/mo for LSN when you could do it for free and get a nice csv to go along with it?_
+### The Problem
+Early-career engineers in service-based companies (WITCH) struggle to transition to top-tier product companies like MAANG. Traditional career coaching and job searching methods are inefficient and lack personalization.
 
-## Features
+### Our Solution
+HeyCoach's LinkedIn AI Lead Generator is a cutting-edge tool designed to:
+- Automate professional networking
+- Generate high-quality, personalized connection requests
+- Leverage AI to identify and engage potential coaching candidates
 
-- Scrapes staff from a company on **LinkedIn**
-- Obtains skills, experiences, certifications & more
-- Fetch individuals users / comments on posts
-- Export all your connections with their contact info
-- Aggregates the employees in a Pandas DataFrame
+## Key Features
 
-[Video Guide for StaffSpy](https://youtu.be/DNFmjvpZBTs) - _updated for release v0.2.18_
+### Intelligent Profile Targeting
+- Scrape LinkedIn profiles of engineers in service-based companies
+- Analyze career transition potential using advanced AI algorithms
+- Focus on professionals seeking to move from WITCH to MAANG
+
+### AI-Powered Messaging
+- Generate contextually relevant, personalized connection messages
+- Understand individual career aspirations
+- Create compelling outreach that resonates with early-career professionals
+
+### Automated Lead Generation
+- Scale your coaching outreach efficiently
+- Reduce manual networking efforts
+- Increase conversion rates through intelligent targeting
+
+## Technical Architecture
+
+### Components
+- LinkedIn Profile Scraper
+- AI-Powered Message Generation
+- Intelligent Targeting Algorithm
+- OpenAI Integration
+
+### Technologies
+- Python
+- Selenium
+- OpenAI GPT
+- LinkedIn API Interaction
+
+## Use Cases
+
+1. **Career Coaching Outreach**
+   - Identify potential coaching clients
+   - Personalize initial contact
+   - Streamline lead generation process
+
+2. **Career Transition Support**
+   - Connect with engineers seeking growth
+   - Provide targeted career development insights
+   - Build a community of ambitious professionals
+
+## Getting Started
+
+### Prerequisites
+- LinkedIn Account
+- OpenAI API Key
+- Python 3.8+
 
 ### Installation
-
+```bash
+git clone https://github.com/yashvoladoddi37/linkedin-ai-lead-generator.git
+cd linkedin-ai-lead-generator
+pip install -r requirements.txt
 ```
-pip install -U staffspy[browser]
+
+### Configuration
+Set up environment variables:
+```
+LINKEDIN_USERNAME=your_username
+LINKEDIN_PASSWORD=your_password
+OPENAI_API_KEY=your_openai_key
 ```
 
-_Python version >= [3.10](https://www.python.org/downloads/release/python-3100/) required_
-
-### Usage
-
+### Usage Example
 ```python
-from staffspy import LinkedInAccount, SolverType, DriverType, BrowserType
+from staffspy import LinkedInAccount
 
 account = LinkedInAccount(
-    # driver_type=DriverType( # if issues with webdriver, specify its exact location, download link in the FAQ
-    #     browser_type=BrowserType.CHROME,
-    #     executable_path="/Users/pc/chromedriver-mac-arm64/chromedriver"
-    # ),
-    session_file="session.pkl", # save login cookies to only log in once (lasts a week or so)
-    log_level=1, # 0 for no logs
+    username='your_linkedin_email',
+    password='your_password', 
+    openai_api_key='your_openai_key'
 )
 
-# search by company
-staff = account.scrape_staff(
-    company_name="openai",
-    search_term="software engineer",
-    location="london",
-    extra_profile_data=True, # fetch all past experiences, schools, & skills
-    max_results=50, # can go up to 1000
-    # block=True # if you want to block the user after scraping, to exclude from future search results
-    # connect=True # if you want to connect with the users till you hit your limit
+# Scrape and connect with personalized messages
+leads = account.scrape_staff(
+    company_name='TCS',  # Target service-based company
+    search_term='Software Engineer',
+    location='India',
+    connect=True,
+    send_messages=True
 )
-# or fetch by user ids
-users = account.scrape_users(
-    user_ids=['williamhgates', 'rbranson', 'jeffweiner08']
-    # connect=True,
-    # block=True
-)
-
-# fetch all comments on two of Bill Gates' posts 
-comments = account.scrape_comments(
-    ['7252421958540091394','7253083989547048961']
-)
-
-# fetch company details
-companies = account.scrape_companies(
-    company_names=['openai', 'microsoft']
-)
-
-# fetch connections (also gets their contact info if available)
-connections = account.scrape_connections(
-    extra_profile_data=True,
-    max_results=50
-)
-
-# export any of the results to csv
-staff.to_csv("staff.csv", index=False)
 ```
 
-#### Browser login
+## Ethical Considerations
+- Respect LinkedIn's Terms of Service
+- Obtain proper consent
+- Maintain professional networking etiquette
 
-If you rather use a browser to log in, install the browser add-on to StaffSpy .
+## Future Roadmap
+- Enhanced AI message personalization
+- Multi-platform support
+- Advanced analytics dashboard
 
-`pip install staffspy[browser]`
+## Contributing
+Contributions are welcome! Please read our contributing guidelines.
 
-If you do not pass the `username` & `password` params, then a browser will open to sign in to LinkedIn on the first sign-in. Press enter after signing in to begin scraping.
+## License
+MIT License
 
-### Output
+## Attribution
+This project builds upon [StaffSpy](https://github.com/cullenwatson/StaffSpy), an open-source LinkedIn scraping tool.
 
-| profile_id       | name           | first_name | last_name | location                        | age | position                        | followers | connections | company | past_company1 | past_company2 | school1                             | school2                    | skill1   | skill2     | skill3     | is_connection | premium | creator | potential_email                                  | profile_link                                 | profile_photo                                                                                                                                                               |
-| ---------------- | -------------- | ---------- | --------- | ------------------------------- | --- | ------------------------------- | --------- | ----------- | ------- | ------------- | ------------- | ---------------------------------- | ------------------------- | -------- | ---------- | ---------- | ------------- | ------- | ------- | ------------------------------------------------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| javiersierra2102 | Javier Sierra  | Javier     | Sierra    | London, England, United Kingdom | 39  | Software Engineer               | 735       | 725         | OpenAI  | Meta          | Oculus VR     | Hult International Business School | Universidad Simón Bolívar | Java     | JavaScript | C++        | FALSE         | FALSE   | FALSE   | javier.sierra@openai.com, jsierra@openai.com     | https://www.linkedin.com/in/javiersierra2102 | https://media.licdn.com/dms/image/C4D03AQHEyUg1kGT08Q/profile-displayphoto-shrink_800_800/0/1516504680512?e=1727913600&v=beta&t=3enCmNDBtJ7LxfbW6j1hDD8qNtHjO2jb2XTONECxUXw |
-| dougli           | Douglas Li     | Douglas    | Li        | London, England, United Kingdom | 37  | @ OpenAI UK, previously at Meta | 583       | 401         | OpenAI  | Shift Lab     | Facebook      | Washington University in St. Louis |                           | Java     | Python     | JavaScript | FALSE         | TRUE    | FALSE   | douglas.li@openai.com, dli@openai.com            | https://www.linkedin.com/in/dougli           | https://media.licdn.com/dms/image/D4E03AQETmRyb3_GB8A/profile-displayphoto-shrink_800_800/0/1687996628597?e=1727913600&v=beta&t=HRYGJ4RxsTMcPF1YcSikXlbz99hx353csho3PWT6fOQ |
-| nkartashov       | Nick Kartashov | Nick       | Kartashov | London, England, United Kingdom | 33  | Software Engineer               | 2186      | 2182        | OpenAI  | Google        | DeepMind      | St. Petersburg Academic University | Bioinformatics Institute  | Teamwork | Java       | Haskell    | FALSE         | FALSE   | FALSE   | nick.kartashov@openai.com, nkartashov@openai.com | https://www.linkedin.com/in/nkartashov       | https://media.licdn.com/dms/image/D4E03AQEjOKxC5UgwWw/profile-displayphoto-shrink_800_800/0/1680706122689?e=1727913600&v=beta&t=m-JnG9nm0zxp1Z7njnInwbCoXyqa3AN-vJZntLfbzQ4 |
+## Contact
+Yash Voladoddi - yashvoladoddi37@gmail.com
+Project Link: https://github.com/yashvoladoddi37/linkedin-ai-lead-generator
 
-
-### Parameters for `LinkedInAccount()`
-
-```plaintext
-Optional
-├── session_file (str):
-|    file path to save session cookies, so only one manual login is needed.
-|    can use mult profiles this way
-|
-| For automated login
-├── username (str):
-|    linkedin account email
-│
-├── password (str):
-|    linkedin account password
-|
-├── driver_type (DriverType):
-|    signs in with the given BrowserType (Chrome, Firefox) and executable_path
-|
-├── solver_service (SolverType):
-|    solves the captcha using the desired service - either CapSolver, or 2Captcha (worse of the two)
-|
-├── solver_api_key (str):
-|    api key for the solver provider
-│
-├── log_level (int):
-|    Controls the verbosity of the runtime printouts
-|    (0 prints only errors, 1 is info, 2 is all logs. Default is 0.)
-```
-
-### Parameters for `scrape_staff()`
-
-```plaintext
-Optional
-├── company_name (str):
-|    company identifier on linkedin, will search for that company if that company id does not exist
-|    e.g. openai from https://www.linkedin.com/company/openai
-|
-├── search_term (str):
-|    staff title to search for
-|    e.g. software engineer
-|
-├── location (str):
-|    location the staff resides
-|    e.g. london
-│
-├── extra_profile_data (bool)
-|    fetches educations, experiences, skills, certifications (Default false)
-│
-├── max_results (int):
-|    number of staff to fetch, default/max is 1000 for a search imposed by LinkedIn
-|
-├── block (bool):
-|    whether to block the user after scraping
-|
-├── connect (bool):
-|    whether to conncet with the user after scraping
-```
-
-### Parameters for `scrape_users()`
-
-```plaintext
-├── user_ids (list):
-|    user ids to scrape from
-|     e.g. dougmcmillon from https://www.linkedin.com/in/dougmcmillon
-|
-├── block (bool):
-|    whether to block the user after scraping
-|
-├── connect (bool):
-|    whether to conncet with the user after scraping
-```
-
-
-### Parameters for `scrape_comments()`
-
-```plaintext
-├── post_ids (list):
-|    post ids to scrape from
-|     e.g. 7252381444906364929 from https://www.linkedin.com/posts/williamhgates_technology-transformtheeveryday-activity-7252381444906364929-Bkls
-```
-
-
-### Parameters for `scrape_companies()`
-
-```plaintext
-├── company_names (list):
-|    list of company names to scrape details from
-|     e.g. ['openai', 'microsoft', 'google']
-```
-
-
-### Parameters for `scrape_connections()`
-
-```plaintext
-├── max_results (int):
-|    maximum number of connections to fetch
-|
-├── extra_profile_data (bool):
-|    fetches educations, experiences, skills, certifications & contact info for each connection (Default false)
-```
-
-### LinkedIn notes
-
-    - only 1000 max results per search
-    - extra_profile_data increases runtime by O(n)
-    - if rate limited, the program will stop scraping
-    - if using non-browser sign in, turn off 2fa
-
----
-
-## Frequently Asked Questions
-
----
-
-**Q: Can I get my account banned?**  
-**A:** It is a possibility, although there are no recorded incidents. Let me know if you are the first. However, to protect you, the code does not allow you to run it if LinkedIn is blocking you
-
----
-
-**Q: Scraped 999 staff members, with 869 hidden LinkedIn Members?**  
-**A:** It means your LinkedIn account is bad. Not sure how they classify it but unverified email, new account, low connections and a bunch of factors go into it.
-
----
-
-**Q: How to get around the 1000 search limit result?**  
-**A:** Check the examples folder. We can block the user after searching and try many different locations and search terms to maximize results.
-
----
-
-**Q: Exception: driver not found for selenium?**  
-**A:** You need chromedriver installed (not the chrome): https://googlechromelabs.github.io/chrome-for-testing/#stable
-
----
-
-**Q: Encountering issues with your queries?**  
-**A:** If problems
-persist, [submit an issue](https://github.com/cullenwatson/StaffSpy/issues).
-
-
-### Staff Schema
-
-```plaintext
-Staff
-├── Personal Information
-│   ├── search_term
-│   ├── id
-│   ├── name
-│   ├── first_name
-│   ├── last_name
-│   ├── location
-│   └── bio
-│
-├── Professional Details
-│   ├── position
-│   ├── profile_id
-│   ├── profile_link
-│   ├── potential_emails
-│   └── estimated_age
-│
-├── Social Connectivity
-│   ├── followers
-│   ├── connections
-│   └── mutuals_count
-│
-├── Status
-│   ├── influencer
-│   ├── creator
-│   ├── premium
-│   ├── open_to_work
-│   ├── is_hiring
-│   └── is_connection
-│
-├── Visuals
-│   ├── profile_photo
-│   └── banner_photo
-│
-├── Skills
-│   ├── name
-│   └── endorsements
-│
-├── Experiences
-│   ├── from_date
-│   ├── to_date
-│   ├── duration
-│   ├── title
-│   ├── company
-│   ├── location
-│   └── emp_type
-│
-├── Certifications
-│   ├── title
-│   ├── issuer
-│   ├── date_issued
-│   ├── cert_id
-│   └── cert_link
-│
-├── Educational Background
-|   ├── years
-|   ├── school
-|   └── degree
-│
-└── Connection Info (only when a connection and enabled on their profile)
-    ├── email_address
-    ├── address
-    ├── birthday
-    ├── websites
-    ├── phone_numbers
-    └── created_at
-```
