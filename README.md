@@ -1,4 +1,4 @@
-# HeyCoach LinkedIn AI Lead Generator
+# LinkedIn AI Lead Generator
 
 ## Project Overview
 
@@ -6,7 +6,7 @@
 Early-career engineers in service-based companies (WITCH) struggle to transition to top-tier product companies like MAANG. Traditional career coaching and job searching methods are inefficient and lack personalization.
 
 ### Our Solution
-HeyCoach's LinkedIn AI Lead Generator is a cutting-edge tool designed to:
+LinkedIn AI Lead Generator is a cutting-edge tool designed to:
 - Automate professional networking
 - Generate high-quality, personalized connection requests
 - Leverage AI to identify and engage potential coaching candidates
@@ -92,7 +92,8 @@ leads = account.scrape_staff(
     search_term='Software Engineer',
     location='India',
     connect=True,
-    send_messages=True
+    send_messages=True,
+    extra_profile_data=True
 )
 ```
 
@@ -116,6 +117,6 @@ MIT License
 This project builds upon [StaffSpy](https://github.com/cullenwatson/StaffSpy), an open-source LinkedIn scraping tool.
 
 ## Contact
-Yash Voladoddi - yashvoladoddi37@gmail.com
+Yashpreet Voladoddi - yash.voladoddi@gmail.com
 Project Link: https://github.com/yashvoladoddi37/linkedin-ai-lead-generator
 
